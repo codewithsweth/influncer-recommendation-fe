@@ -10,13 +10,13 @@ interface Company {
 }
 
 interface Influencer {
-  id: number;
-  name: string;
-  platform: string;
-  followers: string;
-  engagement: string;
-  category: string;
-  avatar: string;
+  influencer_id: string;
+  bio: string;
+  country: string;
+  follower_count: number;
+  age: number;
+  gender: string;
+  similarity_score: number;
 }
 
 interface Filters {
@@ -330,7 +330,7 @@ const getInfluencerLevel = (count: number): string => {
 function App() {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [showInfluencers, setShowInfluencers] = useState(false);
-  const [filteredInfluencers, setFilteredInfluencers] = useState<(Influencer & { country: string })[]>([]);
+  const [filteredInfluencers, setFilteredInfluencers] = useState<Influencer[]>([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<Filters>({
     numberOfInfluencers: 10,
@@ -353,6 +353,10 @@ function App() {
   const handleRecommendInfluencers = async () => {
     setLoading(true);
     try {
+      const response = await axios.get(apiUrl);
+      setFilteredInfluencers(response.data);
+      setShowInfluencers(true);
+    } catch (error) {
       console.error('Error fetching recommendations:', error);
       // Fallback to local data
       const filtered = getFilteredInfluencers(filters);
@@ -689,20 +693,19 @@ function App() {
                 <div className="space-y-4">
                   {filteredInfluencers.map((influencer) => (
                     <div
-                      key={influencer.id}
+                      key={influencer.influencer_id}
                       className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-all duration-200 hover:border-gray-300"
                     >
                       <div className="flex items-start gap-4">
-                        <img
-                          src={influencer.avatar}
-                          alt={influencer.name}
-                          className="w-16 h-16 rounded-full object-cover"
-                        />
+                        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center text-white font-semibold text-lg">
+                          {influencer.influencer_id.slice(-1)}
+                        </div>
                         <div className="flex-1">
                           <div className="flex items-start justify-between">
                             <div>
-                              <h4 className="font-medium text-gray-900">{influencer.name}</h4>
-                              <p className="text-sm text-gray-500">{influencer.category} • {influencer.platform} • {influencer.country}</p>
+                              <h4 className="font-medium text-gray-900">{influencer.influencer_id}</h4>
+                              <p className="text-sm text-gray-500">{influencer.bio}</p>
+                              <p className="text-sm text-gray-400 mt-1">{influencer.country} • Age {influencer.age} • {influencer.gender}</p>
                             </div>
                             <button className="text-blue-600 hover:text-blue-700 transition-colors">
                               <ExternalLink className="h-4 w-4" />
@@ -712,11 +715,11 @@ function App() {
                           <div className="flex gap-6 mt-3">
                             <div className="flex items-center gap-1">
                               <Users className="h-4 w-4 text-gray-400" />
-                              <span className="text-sm text-gray-600">{influencer.followers} followers</span>
+                              <span className="text-sm text-gray-600">{influencer.follower_count.toLocaleString()} followers</span>
                             </div>
                             <div className="flex items-center gap-1">
                               <Star className="h-4 w-4 text-gray-400" />
-                              <span className="text-sm text-gray-600">{influencer.engagement} engagement</span>
+                              <span className="text-sm text-gray-600">{(influencer.similarity_score * 100).toFixed(1)}% match</span>
                             </div>
                           </div>
                         </div>
