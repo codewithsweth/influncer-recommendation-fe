@@ -645,10 +645,20 @@ function App() {
                 {/* Generate Button */}
                 <button
                     onClick={handleRecommendInfluencers}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                    disabled={!selectedCompany || loading}
+                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                   >
-                    <Users className="h-5 w-5" />
-                    Generate Recommendations
+                    {loading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        Loading...
+                      </>
+                    ) : (
+                      <>
+                        <Users className="h-5 w-5" />
+                        Generate Recommendations
+                      </>
+                    )}
                   </button>
               </div>
             )}
