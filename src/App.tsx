@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Building2, MapPin, Users, Star, ExternalLink, Filter, Sliders } from 'lucide-react';
 
 interface Company {
@@ -133,157 +134,142 @@ const countries = [
   "Italy", "Russia", "New Zealand"
 ];
 
-// Extended influencers data with countries
-const influencersWithCountries: (Influencer & { country: string })[] = [
+// Mock influencers data matching the API response format
+const mockInfluencers: Influencer[] = [
   {
-    id: 1,
-    name: "Sarah Chen",
-    platform: "Instagram",
-    followers: "2.4M",
-    engagement: "4.8%",
-    category: "Lifestyle",
-    avatar: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "USA"
+    influencer_id: "inf1",
+    bio: "Lifestyle blogger and fashion enthusiast",
+    country: "USA",
+    follower_count: 2400000,
+    age: 28,
+    gender: "female",
+    similarity_score: 0.85
   },
   {
-    id: 2,
-    name: "Marcus Thompson",
-    platform: "YouTube",
-    followers: "1.8M",
-    engagement: "6.2%",
-    category: "Tech Reviews",
-    avatar: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "Canada"
+    influencer_id: "inf2",
+    bio: "Tech reviewer and gadget expert",
+    country: "Canada",
+    follower_count: 1800000,
+    age: 32,
+    gender: "male",
+    similarity_score: 0.78
   },
   {
-    id: 3,
-    name: "Elena Rodriguez",
-    platform: "TikTok",
-    followers: "3.2M",
-    engagement: "8.1%",
-    category: "Fashion",
-    avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "USA"
+    influencer_id: "inf3",
+    bio: "Fashion influencer and style consultant",
+    country: "USA",
+    follower_count: 3200000,
+    age: 25,
+    gender: "female",
+    similarity_score: 0.92
   },
   {
-    id: 4,
-    name: "David Kim",
-    platform: "Instagram",
-    followers: "956K",
-    engagement: "5.4%",
-    category: "Fitness",
-    avatar: "https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "South Korea"
+    influencer_id: "inf4",
+    bio: "Fitness trainer and wellness coach",
+    country: "South Korea",
+    follower_count: 956000,
+    age: 29,
+    gender: "male",
+    similarity_score: 0.73
   },
   {
-    id: 5,
-    name: "Aria Johnson",
-    platform: "YouTube",
-    followers: "1.3M",
-    engagement: "7.3%",
-    category: "Beauty",
-    avatar: "https://images.pexels.com/photos/1310522/pexels-photo-1310522.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "UK"
+    influencer_id: "inf5",
+    bio: "Beauty guru and makeup artist",
+    country: "UK",
+    follower_count: 1300000,
+    age: 26,
+    gender: "female",
+    similarity_score: 0.88
   },
   {
-    id: 6,
-    name: "Alex Rivera",
-    platform: "TikTok",
-    followers: "2.7M",
-    engagement: "9.2%",
-    category: "Entertainment",
-    avatar: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "Brazil"
+    influencer_id: "inf6",
+    bio: "Entertainment content creator and comedian",
+    country: "Brazil",
+    follower_count: 2700000,
+    age: 24,
+    gender: "male",
+    similarity_score: 0.81
   },
   {
-    id: 7,
-    name: "Priya Sharma",
-    platform: "Instagram",
-    followers: "1.1M",
-    engagement: "6.8%",
-    category: "Travel",
-    avatar: "https://images.pexels.com/photos/1130626/pexels-photo-1130626.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "India"
+    influencer_id: "inf7",
+    bio: "Travel blogger and adventure seeker",
+    country: "India",
+    follower_count: 1100000,
+    age: 30,
+    gender: "female",
+    similarity_score: 0.76
   },
   {
-    id: 8,
-    name: "James Wilson",
-    platform: "YouTube",
-    followers: "890K",
-    engagement: "4.2%",
-    category: "Gaming",
-    avatar: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "Australia"
+    influencer_id: "inf8",
+    bio: "Gaming streamer and esports commentator",
+    country: "Australia",
+    follower_count: 890000,
+    age: 27,
+    gender: "male",
+    similarity_score: 0.69
   },
   {
-    id: 9,
-    name: "Sophie Mueller",
-    platform: "TikTok",
-    followers: "1.9M",
-    engagement: "7.8%",
-    category: "Comedy",
-    avatar: "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "Germany"
+    influencer_id: "inf9",
+    bio: "Comedy content creator and entertainer",
+    country: "Germany",
+    follower_count: 1900000,
+    age: 23,
+    gender: "female",
+    similarity_score: 0.84
   },
   {
-    id: 10,
-    name: "Yuki Tanaka",
-    platform: "Instagram",
-    followers: "750K",
-    engagement: "5.9%",
-    category: "Food",
-    avatar: "https://images.pexels.com/photos/1484794/pexels-photo-1484794.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "Japan"
+    influencer_id: "inf10",
+    bio: "Food blogger and culinary expert",
+    country: "Japan",
+    follower_count: 750000,
+    age: 31,
+    gender: "female",
+    similarity_score: 0.72
   },
   {
-    id: 11,
-    name: "Lucas Silva",
-    platform: "YouTube",
-    followers: "1.6M",
-    engagement: "6.5%",
-    category: "Sports",
-    avatar: "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "Brazil"
+    influencer_id: "inf11",
+    bio: "Sports analyst and fitness enthusiast",
+    country: "Brazil",
+    follower_count: 1600000,
+    age: 33,
+    gender: "male",
+    similarity_score: 0.79
   },
   {
-    id: 12,
-    name: "Emma Thompson",
-    platform: "TikTok",
-    followers: "2.1M",
-    engagement: "8.4%",
-    category: "Dance",
-    avatar: "https://images.pexels.com/photos/1858175/pexels-photo-1858175.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "UK"
+    influencer_id: "inf12",
+    bio: "Dance choreographer and performer",
+    country: "UK",
+    follower_count: 2100000,
+    age: 22,
+    gender: "female",
+    similarity_score: 0.86
   },
   {
-    id: 13,
-    name: "Raj Patel",
-    platform: "Instagram",
-    followers: "920K",
-    engagement: "5.1%",
-    category: "Business",
-    avatar: "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "India"
+    influencer_id: "inf13",
+    bio: "Business consultant and entrepreneur",
+    country: "India",
+    follower_count: 920000,
+    age: 35,
+    gender: "male",
+    similarity_score: 0.71
   },
   {
-    id: 14,
-    name: "Marie Dubois",
-    platform: "YouTube",
-    followers: "1.4M",
-    engagement: "6.9%",
-    category: "Art",
-    avatar: "https://images.pexels.com/photos/1391498/pexels-photo-1391498.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "France"
+    influencer_id: "inf14",
+    bio: "Artist and creative director",
+    country: "France",
+    follower_count: 1400000,
+    age: 28,
+    gender: "female",
+    similarity_score: 0.83
   },
   {
-    id: 15,
-    name: "Carlos Rodriguez",
-    platform: "TikTok",
-    followers: "1.7M",
-    engagement: "7.6%",
-    category: "Music",
-    avatar: "https://images.pexels.com/photos/1300402/pexels-photo-1300402.jpeg?w=150&h=150&fit=crop&crop=face",
-    country: "Mexico"
+    influencer_id: "inf15",
+    bio: "Musician and music producer",
+    country: "Mexico",
+    follower_count: 1700000,
+    age: 26,
+    gender: "male",
+    similarity_score: 0.77
   }
 ];
 
@@ -293,7 +279,7 @@ const getFilteredInfluencers = (filters: Filters) => {
   
   // If no country is selected, return random selection
   if (!country) {
-    return influencersWithCountries
+    return mockInfluencers
       .sort(() => Math.random() - 0.5)
       .slice(0, numberOfInfluencers);
   }
@@ -303,13 +289,13 @@ const getFilteredInfluencers = (filters: Filters) => {
   const otherInfluencersCount = numberOfInfluencers - countryInfluencersCount;
   
   // Get influencers from selected country
-  const countryInfluencers = influencersWithCountries
+  const countryInfluencers = mockInfluencers
     .filter(inf => inf.country === country)
     .sort(() => Math.random() - 0.5)
     .slice(0, countryInfluencersCount);
   
   // Get influencers from other countries
-  const otherInfluencers = influencersWithCountries
+  const otherInfluencers = mockInfluencers
     .filter(inf => inf.country !== country)
     .sort(() => Math.random() - 0.5)
     .slice(0, otherInfluencersCount);
@@ -353,6 +339,7 @@ function App() {
   const handleRecommendInfluencers = async () => {
     setLoading(true);
     try {
+      const apiUrl = buildApiUrl();
       const response = await axios.get(apiUrl);
       setFilteredInfluencers(response.data);
       setShowInfluencers(true);
