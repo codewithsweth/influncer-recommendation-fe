@@ -20,23 +20,21 @@ const CompanyList: React.FC<CompanyListProps> = ({
         <h2 className="text-2xl font-semibold text-gray-900">Companies</h2>
       </div>
       
-      <div className="space-y-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {companies.map((company) => (
           <div
             key={company.id}
             onClick={() => onCompanySelect(company)}
-            className={`p-4 rounded-lg border transition-all duration-200 cursor-pointer hover:shadow-md ${
+            className={`p-4 rounded-lg border transition-all duration-200 cursor-pointer hover:shadow-md min-h-[120px] ${
               selectedCompany?.id === company.id
                 ? 'border-blue-500 bg-blue-50 shadow-md'
                 : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
             }`}
           >
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-medium text-gray-900">{company.name}</h3>
-                <p className="text-sm text-gray-500">{company.description}</p>
-              </div>
-              <div className="flex items-center gap-1 text-gray-400">
+            <div className="flex flex-col h-full">
+              <h3 className="font-medium text-gray-900 mb-2">{company.name}</h3>
+              <p className="text-sm text-gray-500 flex-1 mb-2">{company.description}</p>
+              <div className="flex items-center gap-1 text-gray-400 mt-auto">
                 <MapPin className="h-4 w-4" />
                 <span className="text-xs">{company.country}</span>
               </div>

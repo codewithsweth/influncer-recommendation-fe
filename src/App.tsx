@@ -72,19 +72,19 @@ function App() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-8">
-          {/* Company Side - Left (3/10) */}
-          <div className="lg:col-span-3 space-y-6">
-            <CompanyList
-              companies={companies}
-              selectedCompany={selectedCompany}
-              onCompanySelect={handleCompanySelect}
-            />
-          </div>
+        {/* Top Section - Company List (Full Width) */}
+        <div className="mb-8">
+          <CompanyList
+            companies={companies}
+            selectedCompany={selectedCompany}
+            onCompanySelect={handleCompanySelect}
+          />
+        </div>
 
-          {/* Right Side - Company Details + Influencers (7/10) */}
+        {/* Bottom Section - Filters (7/10) and Influencers (3/10) */}
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-8">
+          {/* Left Side - Company Details/Filters (7/10) */}
           <div className="lg:col-span-7 space-y-6">
-            {/* Company Details Card */}
             {selectedCompany && (
               <CompanyDetails
                 company={selectedCompany}
@@ -94,8 +94,10 @@ function App() {
                 onRecommendInfluencers={handleRecommendInfluencers}
               />
             )}
+          </div>
 
-            {/* Influencers List */}
+          {/* Right Side - Influencers List (3/10) */}
+          <div className="lg:col-span-3 space-y-6">
             <InfluencerList
               influencers={filteredInfluencers}
               showInfluencers={showInfluencers}
