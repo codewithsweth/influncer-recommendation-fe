@@ -1,7 +1,7 @@
 import { Filters } from '../types';
 
-export const buildApiUrl = (companyId: number, filters: Filters): string => {
-  const baseUrl = `http://127.0.0.1:8000/recommend_influencers/comp${companyId}`;
+export const buildApiUrl = (companyId: string, filters: Filters): string => {
+  const baseUrl = `http://127.0.0.1:8000/recommend_influencers/${companyId}`;
   const params = new URLSearchParams();
   
   // Required parameters

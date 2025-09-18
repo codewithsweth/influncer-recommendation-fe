@@ -1,39 +1,64 @@
-import { Company } from '../types';
+import { Company } from "../types";
 
 export const companies: Company[] = [
   {
-    id: 1,
-    name: "TechFlow Solutions",
-    description: "Leading software development company specializing in AI and machine learning solutions for enterprise clients.",
-    country: "United States",
-    industry: "Technology"
+    id: "comp1",
+    name: "Healthy Snack Co.",
+    description: "A leading brand in healthy snacks.",
+    country: "USA",
   },
   {
-    id: 2,
-    name: "GreenEarth Cosmetics",
-    description: "Sustainable beauty brand committed to eco-friendly products and cruelty-free testing practices.",
-    country: "Canada",
-    industry: "Beauty & Cosmetics"
+    id: "comp2",
+    name: "Innovatek Electronics",
+    description: "Innovative consumer electronics company.",
+    country: "China",
   },
   {
-    id: 3,
-    name: "FitLife Nutrition",
-    description: "Premium health and wellness company offering organic supplements and fitness programs.",
-    country: "Australia",
-    industry: "Health & Wellness"
+    id: "comp3",
+    name: "FitWear Apparel",
+    description: "Top fitness apparel manufacturer.",
+    country: "USA",
   },
   {
-    id: 4,
-    name: "Urban Style Co.",
-    description: "Contemporary fashion retailer focused on sustainable streetwear and ethical manufacturing.",
-    country: "United Kingdom",
-    industry: "Fashion"
+    id: "comp4",
+    name: "Maison Luxe",
+    description: "Luxury fashion house with global presence.",
+    country: "France",
   },
   {
-    id: 5,
-    name: "ByteCloud Systems",
-    description: "Cloud infrastructure provider delivering scalable solutions for modern businesses worldwide.",
+    id: "comp5",
+    name: "GameForge Esports",
+    description: "Esports organization and gaming accessories.",
     country: "Germany",
-    industry: "Technology"
-  }
+  },
+  {
+    id: "comp6",
+    name: "EcoNest Living",
+    description: "Sustainable home goods and eco-friendly decor.",
+    country: "Netherlands",
+  },
+  {
+    id: "comp7",
+    name: "Prodigy Apps",
+    description: "Mobile app developer specializing in productivity.",
+    country: "India",
+  },
+  {
+    id: "comp8",
+    name: "TrailBlaze Gear",
+    description: "Premium outdoor adventure gear and apparel.",
+    country: "Canada",
+  },
+  {
+    id: "comp9",
+    name: "GlowSkin Beauty",
+    description: "Direct-to-consumer skincare and beauty products.",
+    country: "South Korea",
+  },
+  {
+    id: "comp10",
+    name: "CryptoTrust Finance",
+    description: "Blockchain-based financial services platform.",
+    country: "Switzerland",
+  },
 ];

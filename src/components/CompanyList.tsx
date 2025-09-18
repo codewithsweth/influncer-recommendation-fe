@@ -34,7 +34,7 @@ const CompanyList: React.FC<CompanyListProps> = ({
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-medium text-gray-900">{company.name}</h3>
-                <p className="text-sm text-gray-500">{company.industry}</p>
+                <p className="text-sm text-gray-500">{company.description}</p>
               </div>
               <div className="flex items-center gap-1 text-gray-400">
                 <MapPin className="h-4 w-4" />

@@ -1,9 +1,9 @@
 export interface Company {
-  id: number;
+  id: string;
   name: string;
   description: string;
   country: string;
-  industry: string;
+  industry?: string;
 }
 
 export interface Influencer {
