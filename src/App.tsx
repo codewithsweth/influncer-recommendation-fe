@@ -82,9 +82,9 @@ function App() {
         </div>
 
         {/* Bottom Section - Filters (7/10) and Influencers (3/10) */}
-        <div className="grid grid-cols-1 lg:grid-cols-10 gap-8">
-          {/* Left Side - Company Details/Filters (7/10) */}
-          <div className="lg:col-span-7 space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Left Side - Company Details/Filters (5/10) */}
+          <div className="space-y-6">
             {selectedCompany && (
               <CompanyDetails
                 company={selectedCompany}
@@ -96,8 +96,8 @@ function App() {
             )}
           </div>
 
-          {/* Right Side - Influencers List (3/10) */}
-          <div className="lg:col-span-3 space-y-6">
+          {/* Right Side - Influencers List (5/10) */}
+          <div className="space-y-6">
             <InfluencerList
               influencers={filteredInfluencers}
               showInfluencers={showInfluencers}
