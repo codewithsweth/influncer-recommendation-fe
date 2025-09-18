@@ -95,11 +95,11 @@ const FilterSection: React.FC<FilterSectionProps> = ({ filters, onFilterChange }
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">All Levels</option>
-            <option value="nano">Nano (< 10K)</option>
+            <option value="nano">Nano (&lt; 10K)</option>
             <option value="micro">Micro (10K - 50K)</option>
             <option value="mid">Mid (50K - 500K)</option>
             <option value="macro">Macro (500K - 1M)</option>
-            <option value="mega">Mega (> 1M)</option>
+            <option value="mega">Mega (&gt; 1M)</option>
           </select>
         </div>
 
