@@ -350,10 +350,17 @@ function App() {
     setFilteredInfluencers([]);
   };
 
-  const handleRecommendInfluencers = () => {
-    const filtered = getFilteredInfluencers(filters);
-    setFilteredInfluencers(filtered);
-    setShowInfluencers(true);
+  const handleRecommendInfluencers = async () => {
+    setLoading(true);
+    try {
+      console.error('Error fetching recommendations:', error);
+      // Fallback to local data
+      const filtered = getFilteredInfluencers(filters);
+      setFilteredInfluencers(filtered);
+      setShowInfluencers(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleFilterChange = (key: keyof Filters, value: string | number) => {
