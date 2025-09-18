@@ -331,6 +331,7 @@ function App() {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
   const [showInfluencers, setShowInfluencers] = useState(false);
   const [filteredInfluencers, setFilteredInfluencers] = useState<(Influencer & { country: string })[]>([]);
+  const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<Filters>({
     numberOfInfluencers: 10,
     country: "",
